@@ -164,23 +164,23 @@ class MainWindow(QMainWindow):
     def exit_if_matched(self, price):
         mean = sum([float(bar.end) for bar in self.minutebars[-10:]]) / float(max(len(self.minutebars), 10))
         for trade in [t for t in self.trades if t.status == 'in']:
-            if trade.type == 'a-enter-buy':
+            if trade.enter_type == 'a-enter-buy':
                 if self.current_price <= trade.minutebar.low:
                     trade.exit('loss', self.current_price)
                 elif self.minutebars[-1].begin > mean > self.minutebars[1].end:
                     trade.exit('profit', self.current_price)
 
-            elif trade.type == 'a-enter-sell':
+            elif trade.enter_type == 'a-enter-sell':
                 if self.current_price >= trade.minutebar.high:
                     trade.exit('loss', self.current_price)
                 elif self.minutebars[-1].begin < mean < self.minutebars[-1].end:
                     trade.exit('profit', self.current_price)
 
-            elif trade.type == 'b-enter-buy':
+            elif trade.enter_type == 'b-enter-buy':
                 if self.current_price <= self.box.high - 0.03:
                     trade.exit('exit', self.current_price)
 
-            elif trade.type == 'b-enter-sell':
+            elif trade.enter_type == 'b-enter-sell':
                 if self.current_price >= box.low + 0.03:
                     trade.exit('exit', self.current_price)
 

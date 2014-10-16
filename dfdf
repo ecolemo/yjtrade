@@ -1,0 +1,32 @@
+
+start watching current price
+start watching minute bar
+set stock code: CLX14 amount a 0 amount b 0
+enter test 82.41 81.69 bar 80.92 81.0
+enter test 82.41 81.69 bar 80.99 80.77000000000001
+enter test 82.41 81.69 bar 80.76 80.78999999999999
+enter test 82.41 81.69 bar 80.78999999999999 80.5
+enter test 82.41 81.69 bar 80.5 80.72999999999999
+enter test 82.41 81.69 bar 80.72999999999999 80.78999999999999
+enter test 82.41 81.69 bar 80.8 80.76
+enter test 82.41 81.69 bar 80.76 81.01
+enter test 82.41 81.69 bar 81.0 81.12
+enter test 82.41 81.69 bar 81.12 81.14
+enter test 82.41 81.69 bar 81.13 81.1
+enter test 82.41 81.69 bar 81.07000000000001 80.37
+enter test 82.41 81.69 bar 80.49 80.59
+enter test 82.41 81.69 bar 80.6 81.47
+enter test 82.41 81.69 bar 81.47999999999999 81.56
+enter test 82.41 81.69 bar 82.28999999999999 82.3
+enter test 82.41 81.69 bar 82.3 81.76
+enter test 82.41 81.69 bar 81.78 81.92999999999999
+enter test 82.41 81.69 bar 81.84 81.85
+enter test 82.41 81.69 bar 81.85 81.84
+enter test 82.41 81.69 bar 81.84 81.92
+enter test 82.41 81.69 bar 81.92 81.58
+enter (20141016, 145)  a-enter-sell  81.58  0  2014-10-16 01:45:15.858500  None  0.00  None
+enter (20141016, 145)  b-enter-sell  81.58  0  2014-10-16 01:45:15.867500  None  0.00  None
+enter test 82.41 81.69 bar 81.57000000000001 81.72999999999999
+enter test 82.41 81.69 bar 81.72 81.32000000000001
+enter (20141016, 215)  a-enter-sell  81.32  0  2014-10-16 02:15:16.305500  None  0.00  None
+enter (20141016, 215)  b-enter-sell  81.32  0  2014-10-16 02:15:16.316500  None  0.00  None
