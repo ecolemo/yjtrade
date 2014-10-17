@@ -1,5 +1,6 @@
 import datetime
 import sys
+import os
 from PyQt5.QtWidgets import QApplication, QMainWindow, QDialog
 from PyQt5.QtCore import QTimer, pyqtSlot
 from PyQt5 import QtGui
@@ -232,11 +233,24 @@ class Trade:
                                                        self.exit_type, self.exit_price, self.exited)
 
 def log(*messages):
+    f = open("/trade_log/%s.txt" % execute_time, 'a')
+    s = ' '.join('%s' % m for m in messages)
+    f.write("\n")
+    f.write(s)
+    f.close()
     print(*messages)
     ui_main.logs.setText(ui_main.logs.toPlainText() + "\n" + ' '.join(map(str, messages)))
     ui_main.logs.moveCursor(QtGui.QTextCursor.End)
 
+
 if __name__ == '__main__':
+    execute_time = datetime.datetime.now().strftime('%Y-%m-%d %Hh-%Mm-%Ss')
+    if not os.path.exists("/trade_log"):
+        os.mkdir("/trade_log")
+        f = open("/trade_log/%s.txt" % execute_time, 'w')
+    else:
+        f = open("/trade_log/%s.txt" % execute_time, 'w')
+    
     app = QApplication(sys.argv)
     ui_main = ui.Ui_MainWindow()
     window = MainWindow(ui_main)
