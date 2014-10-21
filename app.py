@@ -7,6 +7,7 @@ from PyQt5 import QtGui
 import ui
 import win32com.client
 import traceback
+import collections
 
 class MainWindow(QMainWindow):
 
@@ -55,9 +56,11 @@ class MainWindow(QMainWindow):
         class EventHandler:
             def OnReceived(this):
                 self.current_price = self.current.GetHeaderValue(7)
+                # 이전 주석 부분
                 # price = Price.objects.create(value=self.current_price)
                 self.ui.current_price.setText(str(self.current_price))
-                # self.exit_if_matched()
+                # 이전 주석 부분
+                self.exit_if_matched()
 
         win32com.client.WithEvents(self.current, EventHandler)
         self.current.SetInputValue(0, self.stock_code)
@@ -162,19 +165,27 @@ class MainWindow(QMainWindow):
         self.trades.append(Trade(minutebar=minutebar, enter_type=enter_type, price=minutebar.end, amount=amount))
         # TODO real api call
 
-    def exit_if_matched(self, price):
-        mean = sum([float(bar.end) for bar in self.minutebars[-10:]]) / float(max(len(self.minutebars), 10))
+    # def exit_if_matched(self, price):
+    def exit_if_matched(self):
+        # mean = sum([float(bar.end) for bar in self.minutebars[-10:]]) / float(max(len(self.minutebars), 10))
+        keys = sorted(self.minutebars)[-10:]
+        mean = sum([float(self.minutebars[key].end) for key in keys]) / float(len(keys))
+        for key in keys:
+            print('key : ', key, 'value : ', self.minutebars[key].end)
+        print('sorted key : ', keys)
+        print('sum : ', sum([float(self.minutebars[key].end) for key in keys]), 'len : ', float(len(keys)))
+        print('mean = ', mean)
         for trade in [t for t in self.trades if t.status == 'in']:
             if trade.enter_type == 'a-enter-buy':
                 if self.current_price <= trade.minutebar.low:
                     trade.exit('loss', self.current_price)
-                elif self.minutebars[-1].begin > mean > self.minutebars[1].end:
+                elif self.minutebars[keys[-1]].begin > mean > self.minutebars[keys[-1]].end:
                     trade.exit('profit', self.current_price)
 
             elif trade.enter_type == 'a-enter-sell':
                 if self.current_price >= trade.minutebar.high:
                     trade.exit('loss', self.current_price)
-                elif self.minutebars[-1].begin < mean < self.minutebars[-1].end:
+                elif self.minutebars[keys[-1]].begin < mean < self.minutebars[keys[-1]].end:
                     trade.exit('profit', self.current_price)
 
             elif trade.enter_type == 'b-enter-buy':
@@ -182,7 +193,7 @@ class MainWindow(QMainWindow):
                     trade.exit('exit', self.current_price)
 
             elif trade.enter_type == 'b-enter-sell':
-                if self.current_price >= box.low + 0.03:
+                if self.current_price >= self.box.low + 0.03:
                     trade.exit('exit', self.current_price)
 
 class Box:
